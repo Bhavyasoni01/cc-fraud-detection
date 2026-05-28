@@ -7,7 +7,7 @@ Real-time fraud detection system using XGBoost with SMOTE-balanced training data
 ## 🎯 Model Performance
 - **Algorithm**: XGBoost Classifier with SMOTE oversampling
 - **Fraud Detection Rate (Recall)**: 87%
-- **Precision**: 62%
+- **Precision**: 82%
 - **False Positive Rate**: 0.08%
 - **ROC-AUC Score**: 0.98
 
