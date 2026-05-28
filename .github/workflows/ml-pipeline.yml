@@ -33,7 +33,7 @@ jobs:
           assert len(df) >0, 'Dataset is empty'
           assert 'Class' in df.columns, 'Target Column missing'
           assert df['Class'].nunique()==2, 'Expectedf Binary classification'
-          print(f"Dataset is Valid: {len(df)} rows, {df.columns.tolist()}")        
+          print(f'Dataset is Valid: {len(df)} rows, {df.columns.tolist()}')        
           "
 
     - name: Build Docker Image
