@@ -29,21 +29,21 @@ jobs:
       run: |
           python -c "
           import pandas as pd
-          df = pd.read_csv("creditcard.csv")
+          df = pd.read_csv('creditcard_sample.csv')
           assert len(df) >0, 'Dataset is empty'
           assert 'Class' in df.columns, 'Target Column missing'
-          assert df['class'].nunique()==2, 'Expectedf Binary classification'
+          assert df['Class'].nunique()==2, 'Expectedf Binary classification'
           print(f"Dataset is Valid: {len(df)} rows, {df.columns.tolist()}")        
           "
 
     - name: Build Docker Image
       run: |
-        docker build -t fraud-detection-api .
+        docker build -f Dockerfile.api -t fraud-detection-api .
 
     - name: Test Docker Container
       run: |
         docker run -d -p 8000:8000 --name test-container fraud-detection-api
         sleep 10
-        curl -f http://localhost:8080/ || exit 1
+        curl -f http://localhost:8000/ || exit 1
         docker stop test-container
         echo "Docker Container passed the test"
