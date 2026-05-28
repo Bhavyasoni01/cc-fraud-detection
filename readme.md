@@ -1,5 +1,7 @@
 # Credit Card Fraud Detection API
 
+![ML Pipeline](https://github.com/Bhavyasoni01/cc-fraud-detection/actions/workflows/ml-pipeline.yml/badge.svg)
+
 Real-time fraud detection system using XGBoost with SMOTE-balanced training data.
 
 ## 🎯 Model Performance
@@ -172,6 +174,6 @@ Analyze a transaction for fraud.
 4. **Threshold tuning is crucial** - Default 0.5 might not be optimal for your use case
 5. **Docker simplifies deployment** - One command to run anywhere
 
----
+-- 
 
 **Dataset Source**: [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
