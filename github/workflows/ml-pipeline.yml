@@ -1,0 +1,49 @@
+name: ML-Pipeline  CI/CD
+
+on:
+  push:
+    branches: [ main  ]
+  pull_request:
+    branches: [ main ]
+
+
+jobs: 
+  ml-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Code 
+      uses: actions/checkout@v3
+
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies 
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Validate Dataset
+      run: |
+          python -c "
+          import pandas as pd
+          df = pd.read_csv("creditcard.csv")
+          assert len(df) >0, 'Dataset is empty'
+          assert 'Class' in df.columns, 'Target Column missing'
+          assert df['class'].nunique()==2, 'Expectedf Binary classification'
+          print(f"Dataset is Valid: {len(df)} rows, {df.columns.tolist()}")        
+          "
+
+    - name: Build Docker Image
+      run: |
+        docker build -t fraud-detection-api .
+
+    - name: Test Docker Container
+      run: |
+        docker run -d -p 8000:8000 --name test-container fraud-detection-api
+        sleep 10
+        curl -f http://localhost:8080/ || exit 1
+        docker stop test-container
+        echo "Docker Container passed the test"
